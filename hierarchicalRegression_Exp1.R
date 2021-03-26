@@ -17,7 +17,7 @@ sessions = c('v38', 'v39', 'v40', 'v41', 'v42', 'v43')
 #load in all task data
 for (i in 1:length(sessions)){ 
   currentData = paste('data_exp_12022-',sessions[i],sep="")
-  dataDir = "~/Dropbox/MetaMenta/Data/Exp1/" 
+  dataDir = "~/Dropbox/MetaMenta-project/Data/Exp1/" 
   Dir = paste(dataDir,currentData, '/', sep="")
   files = c('_task-pf6t', '_task-yzt9')
   for (j in 1:length(files)){

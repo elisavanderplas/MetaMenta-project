@@ -2,15 +2,15 @@
 %elisavanderplasATgmail.com
 
 clear all; close all; fs = filesep;
-baseDir =  ['~' fs 'Dropbox' fs 'MetaMenta' fs];
-dirData_clinical = [baseDir 'Data' fs 'Exp1' fs];
+baseDir =  ['~' fs 'Dropbox' fs 'MetaMenta-project' fs];
+dirData = [baseDir 'Data' fs 'Exp1' fs];
 scriptDir = [baseDir 'Analyses' fs];
 addpath([baseDir fs 'Analyses' fs 'myfunctions' fs 'HMeta-d' fs 'Matlab' fs]);
 addpath([baseDir fs 'Analyses' fs 'myfunctions']);
 
-%load in the prepared alldata   
-load([dirData_clinical 'allData.mat'])
-load([dirData_clinical 'allMetaData.mat'])
+%load in the prepared data   
+load([dirData 'allData.mat'])
+load([dirData 'allMetaData.mat'])
 
 %zscore key variables in the table
 data.MCQ_feelings = zscore(data.MCQ_feelings);
@@ -22,13 +22,13 @@ data.AQ10_C = (data.AQ10_C-nanmean(data.AQ10_C))/nanstd(data.AQ10_C)*-1; %becaus
 data.RAADS = (data.RAADS-nanmean(data.RAADS))/nanstd(data.RAADS);
 data.RAADS_M = (data.RAADS_MENTA-nanmean(data.RAADS_MENTA))/nanstd(data.RAADS_MENTA);
 
-%separate dataset without negative Mratios
+%make a separate dataset without negative Mratios
 data1 = data(data.metaR > 0,:);
 data1.metaR = zscore(log(data1.metaR));
 
-%separate dataset without NaN questionnaires
+%make a separate dataset without NaNs in the questionnaires
 data2 = data(find(~isnan(data.RAADS)),:); 
-metaData(2).nR_S1 = metaData(1).nR_S1;%to allow for no RAADS, remove 241 and 322
+metaData(2).nR_S1 = metaData(1).nR_S1;%TO DO remove 241 and 322
 metaData(2).nR_S2 = metaData(1).nR_S2;
 
 %check validity of menta-score, line 235-236
@@ -61,7 +61,7 @@ cd(scriptDir)
 [fig4, fig5, fig6] = modelfit_checks(FIT2,data2.metaR, data2.RAADS, 'RAADS-14');
 % compute probability
 samples = FIT2.mcmc.samples.mu_beta1 > 0;
-p_theta = (sum(samples(:) == 0))/30000;
+p_theta = (sum(samples(:) == 0))/(sum(samples(:)));
 
 %step 2 - RAADS: frequentist linear model w/ covariates
 fitlm(data1, 'metaR~RAADS+age+gender+education+IQ')
@@ -75,7 +75,7 @@ FIT3 = fit_meta_d_mcmc_regression(metaData(2).nR_S1, metaData(2).nR_S2, data2.AQ
 [fig4, fig5, fig6] = modelfit_checks(FIT3, data2.metaR, data2.AQ10_C, 'AQ10 communication'); 
 % compute probability
 samples = FIT3.mcmc.samples.mu_beta1 > 0; 
-p_theta = (sum(samples(:) == 1))/30000; 
+p_theta = (sum(samples(:) == 1))/(sum(samples(:))); 
 
 %step 2 - communication: frequentist linear model w/ covariates
 fitlm(data1, 'metaR~AQ10_C+age+gender+education+IQ') 
@@ -85,7 +85,7 @@ FIT4 = fit_meta_d_mcmc_regression(metaData(2).nR_S1, metaData(2).nR_S2, data2.RA
 [fig4, fig5, fig6] = modelfit_checks(FIT4, data2.metaR, data2.RAADS_M, 'RAADS menta.'); 
 % compute probability
 samples = FIT4.mcmc.samples.mu_beta1 > 0; 
-p_theta = (sum(samples(:) == 1))/30000; 
+p_theta = (sum(samples(:) == 1))/(sum(samples(:))); 
 
 %step 2 - communication: frequentist linear model w/ covariates
 fitlm(data1, 'metaR~RAADS_M+age+gender+education+IQ') 

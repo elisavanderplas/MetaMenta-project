@@ -1,6 +1,7 @@
 function [h01] = betaPlot(exp)
 
-%% Plot the beta coefficients
+%% Plot the beta coefficients from R (see: HierarchicalRegression_Exp1.R) to figure "h01"
+%% receives as input whether needs to plot the beta plot of experiment 1 or 2, as exp = 1/2
 % EVDP 2019 elisa.plas.18@ucl.ac.uk
 
 fs = filesep;
@@ -9,7 +10,7 @@ c.corr =  [0.082, 0.615, 0.835];
 c.err = [0.835, 0.250, 0.082];
 
 if exp == 1
-    baseDir =  ['~' fs 'Dropbox' fs 'MetaMenta' fs 'Data' fs 'Exp1' fs];
+    baseDir =  ['~' fs 'Dropbox' fs 'MetaMenta-project' fs 'Data' fs 'Exp1' fs];
     
     for acc = 1:2
         for ASD = 1:2
@@ -43,7 +44,7 @@ if exp == 1
     
 else
     
-    baseDir =  ['~' fs 'Dropbox' fs 'MetaMenta' fs 'Data' fs 'Exp2' fs];
+    baseDir =  ['~' fs 'Dropbox' fs 'MetaMenta-project' fs 'Data' fs 'Exp2' fs];
     filename = 'regression_betas_'; %'HierarchicalRegression_exp2.r'
     
     for acc = 1:2

@@ -15,7 +15,7 @@ asdData = NULL
 ctlData = NULL
 bigData = NULL
 dat = NULL
-asdDir = "~/Dropbox/MetaMenta/Data/Exp2/"
+asdDir = "~/Dropbox/MetaMenta-project/Data/Exp2/"
 current_recruitment = "data_exp_27169-v8"
 files = c('_task-pf6t', '_task-yzt9')
 for (i in 1:length(files)){
@@ -73,7 +73,7 @@ sessions = c('v38', 'v39', 'v40', 'v41', 'v42', 'v43')
 #load in all data
 for (i in 1:length(sessions)){ 
   currentData = paste('data_exp_12022-',sessions[i],sep="")
-  ctlDir = "~/Dropbox/MetaMenta/Data/Exp1/"
+  ctlDir = "~/Dropbox/MetaMenta-project/Data/Exp1/"
   Dir = paste(ctlDir,currentData, '/', sep="")
   files = c('_task-pf6t', '_task-yzt9')
   for (j in 1:length(files)){
