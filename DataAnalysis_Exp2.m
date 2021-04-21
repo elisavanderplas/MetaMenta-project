@@ -34,19 +34,6 @@ Data2 = Data(find(~isnan(Data.RAADS)),:);
 [H,P,CI, STATS] = ttest2(Data.acc(1:40), Data.acc(41:end));
 [H,P,KSSTAT] = kstest2(Data.acc(1:40), Data.acc(41:end));
 
-%% Hypothesis 1
-%step 1: simultaneous HMeta-d' hierarchical regression
-mcmc_params.nsamples =20000; 
-FIT1 = fit_meta_d_mcmc_regression(metaData{3}.nR_S1, metaData{3}.nR_S2, Data.MCQ_feelings');
-cd(scriptDir)
-[fig1, fig2, fig3] = regrModelfit_checks(FIT1, Data.metaR, Data.MCQ_feelings);
-% compute probability
-samples = FIT1.mcmc.samples.mu_beta1 > 0;
-p_theta = (sum(samples(:) == 0))/(sum(samples(:)));
-
-%step 2: frequentist linear model w/ covariates
-fitlm(Data1, 'metaR~MCQ_feelings+age+gender+edu+IQ')
-
 %NB. for the mixed-effect hierarchical regression model, see:
 %hierarchicalRegression_Exp2.R
 
@@ -65,4 +52,6 @@ FIT2.ASDregr = fit_meta_d_mcmc_regression(metaData{1}.nR_S1, metaData{1}.nR_S2, 
 FIT2.CTLregr = fit_meta_d_mcmc_regression(metaData{2}.nR_S1, metaData{2}.nR_S2, cov_CTL); %%TO DO remove CTL: 23
 cd(scriptDir)
 [fig4, fig5] = groupModelfit_checks(FIT2.ASDregr, FIT2.CTLregr,Data.metaR);
+
+[fig6] = betaPlot(2); %%plot the coefficients (Figure 3C)
 

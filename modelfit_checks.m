@@ -18,7 +18,7 @@ subplot(2,2,2)
 histogram(exp(MODEL.mcmc.samples.mu_logMratio(:)),500, 'facecolor', [0.6, 0.6, 0.6], 'edgecolor', [0.6, 0.6, 0.6], 'facealpha', 0.4);
 title('95% HDI Mratio', 'fontsize', 20); 
 HDI = calc_HDI(exp(MODEL.mcmc.samples.mu_logMratio(:)));
-text(HDI(1), 235, num2str(round(HDI,3)), 'FontSize', 14); 
+text(HDI(1), 235, num2str(round(HDI,2)), 'FontSize', 14); 
 xline(HDI(1), '--', 'color', 'k', 'linewidth', 2)
 xline(HDI(2), '--', 'color', 'k', 'linewidth', 2)
 xline(0, '-', 'color', 'k', 'linewidth', 1)
@@ -37,7 +37,7 @@ subplot(2,2,4)
 histogram(MODEL.mcmc.samples.mu_beta1(:),500,'facecolor', [0.6, 0.6, 0.6], 'edgecolor', [0.6, 0.6, 0.6], 'facealpha', 0.4);
 title(['95% HDI ' name_var1], 'fontsize', 20); 
 HDI = calc_HDI(MODEL.mcmc.samples.mu_beta1(:));
-text(HDI(1), 235, num2str(round(HDI,3)), 'FontSize', 14); 
+text(HDI(1), 235, num2str(round(HDI,2)), 'FontSize', 14); 
 xline(HDI(1), '--', 'color', 'k', 'linewidth', 2)
 xline(HDI(2), '--', 'color', 'k', 'linewidth', 2)
 xline(0, '-', 'color', 'k', 'linewidth', 1)
