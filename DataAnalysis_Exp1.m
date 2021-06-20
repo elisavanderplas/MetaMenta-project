@@ -47,7 +47,11 @@ fitlm(data1, 'metaR~MCQ_feelings+age+gender+education+IQ')
 
 [fig4] = betaPlot(1); %%plot the coefficients (Figure 3a)
 
+<<<<<<< HEAD
 %% replicate menta-AQ effect, line 641-642
+=======
+%% replicate menta-AQ effect, line 276-277
+>>>>>>> d09fc66f474a8bae6dc72fe26517b79d7efa5953
 %step 1 - AQ: frequentist linear model w/ covariates
 fitlm(data, 'MCQ_cat~AQ10+age+gender+education+IQ')
 %step 2 - RAADS: frequentist linear model w/ covariates
@@ -57,7 +61,11 @@ fitlm(data, 'MCQ_cat~RAADS+age+gender+education+IQ') %% so focus on the RAADS
 %step 1 - RAADS: simultaneous HMeta-d' hierarchical regression
 FIT2 = fit_meta_d_mcmc_regression(metaData(2).nR_S1, metaData(2).nR_S2, data2.RAADS');
 cd(baseDir)
+<<<<<<< HEAD
 [fig5, fig6, fig7] = modelfit_checks(FIT2,data2.metaR, data2.RAADS, 'RAADS-14');
+=======
+[fig4, fig5, fig6] = modelfit_checks(FIT2,data2.metaR, data2.RAADS, 'RAADS-14');
+>>>>>>> d09fc66f474a8bae6dc72fe26517b79d7efa5953
 % compute probability
 samples = FIT2.mcmc.samples.mu_beta1 > 0;
 p_theta = (sum(samples(:) == 0))/(sum(samples(:)));
@@ -67,6 +75,7 @@ fitlm(data1, 'metaR~RAADS+age+gender+education+IQ')
 
 %NB, for "distinct constructions of confidence in RAADS" see 'hierarchicalRegression_Exp1.r' script
 
+<<<<<<< HEAD
 %% Exploratory 3A
 %RAADS-Menta: simultaneous HMeta-d' hierarchical regression
 FIT4 = fit_meta_d_mcmc_regression(metaData(2).nR_S1, metaData(2).nR_S2, data2.RAADS_M');
@@ -74,11 +83,21 @@ cd(baseDir)
 [fig8, fig9, fig10] = modelfit_checks(FIT4, data2.metaR, data2.RAADS_M, 'RAADS menta.'); 
 % compute probability
 samples = FIT4.mcmc.samples.mu_beta1 < 0; 
+=======
+%% Exploratory 3
+%step 1 - AQ10-communication: simultaneous HMeta-d' hierarchical regression
+FIT3 = fit_meta_d_mcmc_regression(metaData(2).nR_S1, metaData(2).nR_S2, data2.AQ10_C');
+cd(baseDir)
+[fig4, fig5, fig6] = modelfit_checks(FIT3, data2.metaR, data2.AQ10_C, 'AQ10 communication'); 
+% compute probability
+samples = FIT3.mcmc.samples.mu_beta1 < 0; 
+>>>>>>> d09fc66f474a8bae6dc72fe26517b79d7efa5953
 p_theta = (sum(samples(:) == 1))/(sum(samples(:))); 
 
 %step 2 - communication: frequentist linear model w/ covariates
 fitlm(data1, 'metaR~RAADS_M+age+gender+education+IQ') 
 
+<<<<<<< HEAD
 %% Exploratory 3B
 %RAADS-nonsocial: simultaneous HMeta-d' hierarchical regression
 FIT5 = fit_meta_d_mcmc_regression(metaData(2).nR_S1, metaData(2).nR_S2, data2.RAADS_NS');
@@ -87,6 +106,15 @@ cd(baseDir)
 % compute probability
 samples = FIT5.mcmc.samples.mu_beta1 < 0; 
 p_theta = (sum(samples(:) == 1))/30000; 
+=======
+%step 1 - RAADS-Menta: simultaneous HMeta-d' hierarchical regression
+FIT4 = fit_meta_d_mcmc_regression(metaData(2).nR_S1, metaData(2).nR_S2, data2.RAADS_M');
+cd(baseDir)
+[fig4, fig5, fig6] = modelfit_checks(FIT4, data2.metaR, data2.RAADS_M, 'RAADS menta.'); 
+% compute probability
+samples = FIT4.mcmc.samples.mu_beta1 < 0; 
+p_theta = (sum(samples(:) == 1))/(sum(samples(:))); 
+>>>>>>> d09fc66f474a8bae6dc72fe26517b79d7efa5953
 
 %step 2 - communication: frequentist linear model w/ covariates
 fitlm(data1, 'metaR~RAADS_NS+age+gender+education+IQ') 
