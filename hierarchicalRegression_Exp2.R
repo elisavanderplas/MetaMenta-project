@@ -138,49 +138,6 @@ CTLData_corr <- CTLData[CTLData$acc == 0.5, ]
 bigData_lmenta <- bigData_clean[bigData_clean$menta_bi == "low", ]
 bigData_hmenta <- bigData_clean[bigData_clean$menta_bi == "high", ]
 
-# H1. conduct a hierarchical regression to see if interaction w/ MCQ can explain how much confidence is influenced by standardized log RT
-confModel_noMCQ = lmer(conf ~ acc + logRT + acc * logRT + (1 + acc + logRT|subj), data=bigData_clean
-                      , control = lmerControl(optimizer = "optimx", calc.derivs = FALSE, optCtrl = list(method = "bobyqa", starttests = FALSE, kkt = FALSE)))
-
-confModel_wMCQ = lmer(conf ~ menta*(acc + logRT + acc * logRT) + (1 + acc + logRT|subj), data=bigData_clean
-                     , control = lmerControl(optimizer = "optimx", calc.derivs = FALSE, optCtrl = list(method = "bobyqa", starttests = FALSE, kkt = FALSE, REML = FALSE)))
-
-fix <- fixef(confModel_wMCQ)
-print(summary(confModel_wMCQ))
-print(Anova(confModel_wMCQ, type = 3))
-coef(summary(confModel_wMCQ)) #get the contrast statistics
-fix.se <- sqrt(diag(vcov(confModel_wMCQ)))
-
-## check if including mentalizing efficiency as interaction improved the fit of the model 
-anova(confModel_noMCQ,confModel_wMCQ) 
-
-##make a nice figure of conf~RTxMENTA interaction, Figure 3b
-ggplot(bigData_clean, aes(x=logRT, y=conf, colour=menta_bi)) + 
-  geom_count() + 
-  scale_color_manual(values=c("salmon", "turquoise3")) +
-  geom_point(shape=19, size=0.5, alpha = 1.0) + 
-  geom_smooth(method="lm", se = T, aes(fill=menta_bi), alpha = 0.2) + 
-  labs(y="Confidence", x = "logRT (z-score)", color = "Mentalizing efficiency") + 
-  theme_minimal() + theme(axis.text=element_text(size=18),axis.title=element_text(size=25))
-
-## get the coefficients for Figure 3a
-# lowMENTA
-lmenta_coef = lmer(conf ~ logRT + (1 + logRT|subj), data=bigData_lmenta
-                     , control = lmerControl(optimizer = "optimx", calc.derivs = FALSE, optCtrl = list(method = "bobyqa", starttests = FALSE, kkt = FALSE)))
-fix <- fixef(lmenta_coef)
-fix.se <- sqrt(diag(vcov(lmenta_coef)))
-betas <- c(fix, fix.se)
-write.csv(betas, file = paste(asdDir, 'regression_betas_lmenta.csv'))
-
-# highMENTA
-hmenta_coef = lmer(conf ~ logRT + (1 +  logRT|subj), data=bigData_hmenta
-                     , control = lmerControl(optimizer = "optimx", calc.derivs = FALSE, optCtrl = list(method = "bobyqa", starttests = FALSE, kkt = FALSE)))
-fix <- fixef(hmenta_coef)
-fix.se <- sqrt(diag(vcov(hmenta_coef)))
-betas <- c(fix, fix.se)
-write.csv(betas, file = paste(asdDir, 'regression_betas_hmenta.csv'))
-
-
 #H2. Autism: conduct a hierarchical regression to see if interaction w/ RAADS can explain how much confidence is influenced by standardized log RT
 confModel_noASD = lmer(conf ~ acc + logRT + acc * logRT + (1 + acc + logRT|subj), data=bigData_clean
                         , control = lmerControl(optimizer = "optimx", calc.derivs = FALSE, optCtrl = list(method = "bobyqa", starttests = FALSE, kkt = FALSE)))

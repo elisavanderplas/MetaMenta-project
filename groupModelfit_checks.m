@@ -22,7 +22,7 @@ subplot(1,3,1)
 hold on 
 for i = 1:40
     r = -0.065 + (0.065+0.065).*rand(1,1);
-    scat1 = plot([1+r], var1(i),  'd', 'MarkerSize', 9, 'MarkerFaceColor', color_TOM{1}, 'MarkerEdgeColor', color_TOM{1});
+    scat1 = plot([1+r], var1(i),  'o', 'MarkerSize', 9, 'MarkerFaceColor', color_TOM{1}, 'MarkerEdgeColor', color_TOM{1});
 end
 for i = 1:40
     r = -0.065 + (0.065+0.065).*rand(1,1);
@@ -30,8 +30,8 @@ for i = 1:40
 end
 b1 = bar([1 2],[nanmean(var1(1:40)), nanmean(var1(41:end))], 'FaceColor', 'w', 'BarWidth', 0.8, 'LineWidth', 3, 'EdgeColor', [0 0 0], 'FaceAlpha', 0.4);
 errorbar([1 2],[nanmean(var1(1:40)), nanmean(var1(41:end))],[nanmean(var1(1:40))./sqrt(40), nanstd(var1(41:end))./sqrt(40)], '.', 'Color', [0 0 0], 'LineWidth', 4)
-set(gca, 'YLim', [0 1], 'XLim', [0  3], 'XTick', [1,2], 'XTickLabel', {'autism', 'comparison'}, 'FontSize', 20);
-ylabel('metacognitive efficiency', 'FontSize', 20);
+set(gca, 'YLim', [0 1], 'XLim', [0  3], 'XTick', [1,2], 'XTickLabel', {'ASD', 'CNTRL'}, 'FontSize', 20);
+ylabel([{'Standardized individual fit'};{'Metacognitive efficiency'}], 'FontSize', 20);
 xlabel('Clinical group', 'FontSize', 20);
 set(gcf, 'color', 'w')
 
@@ -55,6 +55,7 @@ leg2 = xline(HDI(1), '--', 'color', color_TOM{2}, 'linewidth', 2);
 xline(HDI(2), '--', 'color', color_TOM{2}, 'linewidth', 2)
 xline(0, '-', 'color', 'k', 'linewidth', 1)
 ylabel('No. of samples', 'FontSize', 18);
+set(gca, 'XLim', [-0.05 0.15], 'YLim', [0 300], 'FontSize',22);
 xlabel('Posterior distribution', 'FontSize',18);
 xlim([-0.2 1.2])
 set(gcf, 'color', 'w')
