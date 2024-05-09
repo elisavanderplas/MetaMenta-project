@@ -13,9 +13,14 @@ AQ_AS = 0;
 AQ_C = 0; 
 AQ_S = 0; 
 AQ_I = 0;
-    
-for i = [4,10,7,3,5,6] %reverse keyed items
-    ratings(i) = 5-ratings(i);
+
+%update on 09 05 2024: get also score for non-reversed keyed items  
+for i = 1:10
+    if any(i == [4,10,7,3,5,6]) %check if i is in items that were reversed
+        ratings(i) = 5-ratings(i);%reverse keyed items
+    else 
+        ratings(i) = ratings(i)
+    end
 end
 
     AQ10 = sum(ratings>2); %all items
@@ -26,7 +31,7 @@ end
     AQ_I = [AQ_I, ratings(2), ratings(8)];
     AQ_S = [AQ_S, ratings(6), ratings(9)]; 
         
-    AQ10 = sum(ratings>2); %all items
+    %AQ10 = sum(ratings>2); %all items
     
     AQ10_AD = sum(AQ_AD>2); 
     AQ10_AS = sum(AQ_AS>2); 
